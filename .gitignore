@@ -1,0 +1,5 @@
+# Ignore my env file
+.env
+
+# Ignore node modules
+src/node_modules
