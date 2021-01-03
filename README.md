@@ -14,6 +14,7 @@ This program uses a number of environment variables for configuration.  These ar
 - AMQP_MONITORINFO_ROUTINGKEY=(amqp routing key)
 - SENSE_EMAIL=(Sense Email Address)
 - SENSE_PASSWORD=(<)Sense Password)
+- SENSE_UPDATE_INTERVAL=(Number of seconds to update (defaults to 60 if not supplied))
 
 ### Example
 
@@ -24,5 +25,6 @@ This program uses a number of environment variables for configuration.  These ar
 - AMQP_MONITORINFO_ROUTINGKEY=actions.monitorinfo
 - SENSE_EMAIL=me@gmail.com
 - SENSE_PASSWORD=SuperSecretPassword
+- SENSE_UPDATE_INTERVAL=300
 
 
