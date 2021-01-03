@@ -7,7 +7,11 @@ var mySense;                        //Main Sense API object
 var amqpConn;               //AMQP connection
 var amqpChannel;            //AMQP Channel
 var currentlyProcessing = false;    //Flag to ensure only one websocket packet is handled at a time
-var websocketPollingInterval = 60;  //Number of seconds between opening/closing the websocket
+var websocketPollingInterval = process.env.SENSE_UPDATE_INTERVAL;  //Number of seconds between opening/closing the websocket
+
+if(!websocketPollingInterval) {
+    websocketPollingInterval = 60;
+}
 
 async function startAmqp() {
     //process.env.mqConns is an array of connection string
@@ -75,10 +79,9 @@ async function startSense() {
         //Handle closures and errors
         mySense.events.on('close', (data) => {
             console.log(`Sense WebSocket Closed | Reason: ${data.wasClean ? 'Normal' : data.reason}`);
-            let interval = websocketPollingInterval && websocketPollingInterval > 10 ? websocketPollingInterval : 60;
  
             //On clean close, set up the next scheduled check
-            console.log(`New poll scheduled for ${interval * 1000} ms from now.`);
+            console.log(`New poll scheduled for ${websocketPollingInterval * 1000} ms from now.`);
             setTimeout(() => {
                 currentlyProcessing = false;
                 mySense.openStream();
