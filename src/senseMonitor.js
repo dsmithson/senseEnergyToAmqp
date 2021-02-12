@@ -82,11 +82,11 @@ async function startSense() {
             console.log(`Sense WebSocket Closed | Reason: ${data.wasClean ? 'Normal' : data.reason}`);
  
             //On clean close, set up the next scheduled check
-            console.log(`New poll scheduled for ${websocketPollingInterval * 1000} ms from now.`);
+            console.log(`New poll scheduled for ${websocketPollingInterval} seconds from now.`);
             setTimeout(() => {
                 currentlyProcessing = false;
                 mySense.openStream();
-            },  interval * 1000);
+            },  websocketPollingInterval * 1000);
         });
         mySense.events.on('error', (data) => {
             console.log('Error: Sense WebSocket Closed | Reason: ' + data.msg);
