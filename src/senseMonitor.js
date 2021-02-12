@@ -8,6 +8,7 @@ var amqpConn;               //AMQP connection
 var amqpChannel;            //AMQP Channel
 var currentlyProcessing = false;    //Flag to ensure only one websocket packet is handled at a time
 var websocketPollingInterval = process.env.SENSE_UPDATE_INTERVAL;  //Number of seconds between opening/closing the websocket
+var durableExchange = (process.env.AMQP_EXCHANGE_DURABLE == "true");
 
 if(!websocketPollingInterval) {
     websocketPollingInterval = 60;
@@ -24,7 +25,7 @@ async function startAmqp() {
     amqpChannel.on("error", (err) => {
         console.log("AMQP Error: " + err);
     });
-    await amqpChannel.assertExchange(process.env.AMQP_EXCHANGE, "topic", { durable: false });
+    await amqpChannel.assertExchange(process.env.AMQP_EXCHANGE, "topic", { durable: durableExchange });
 }
  
 async function startSense() {
